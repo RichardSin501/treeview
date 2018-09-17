@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,33 @@ namespace FolderView
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void TreeViewItem_Expanded(object sender, RoutedEventArgs e)
+        {
+            LoadSubFolders(sender);
+        }
+
+        private static void LoadSubFolders(object sender)
+        {
+            var twi = (TreeViewItem)sender;
+            var folder = (Folder)twi.Tag;
+            folder.LoadSubFolders();
+        }
+
+        private void treeView_Initialized(object sender, EventArgs e)
+        {
+            LoadSubFolders(sender);
+        }
+
+        private void TreeViewItem_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            LoadSubFolders(sender);
+        }
+
+        private void TreeViewItem_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            LoadSubFolders(sender);
         }
     }
 }

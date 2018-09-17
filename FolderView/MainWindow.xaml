@@ -6,7 +6,19 @@
         xmlns:local="clr-namespace:FolderView"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <Window.DataContext>
+        <local:ViewModel />
+    </Window.DataContext>
+    <StackPanel Orientation="Horizontal">
+        <TreeView x:Name="treeView"
+                  ItemsSource="{Binding DirList}">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding SubFolders}" DataType="{x:Type local:Folder}">
+                    <TreeViewItem Header="{Binding Name}" Tag="{Binding}" IsExpanded="False"
+                                  Expanded="TreeViewItem_Expanded"
+                                  MouseLeftButtonUp="TreeViewItem_MouseLeftButtonUp" />
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+    </StackPanel>
 </Window>
